@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testvid-gke
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: testvid
+  template:
+    metadata:
+      labels:
+        app: testvid
+    spec:
+      containers:
+      - name: test-vid
+        # Replace $LOCATION with your Artifact Registry location (e.g., us-west1).
+        # Replace $GCLOUD_PROJECT with your project ID.
+        image: us-central1-docker.pkg.dev/third-project-399423/generatevid@sha256:0776cae47cf7718a9337e12f810ef74263540f3c43fc3401c965996c140a0957
+        # This app listens on port 8080 for web traffic by default.
+        ports:
+        - containerPort: 80
+        env:
+          - name: PORT
+            value: "80"
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+            ephemeral-storage: "1Gi"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+            ephemeral-storage: "1Gi"
+      tolerations:
+        - key: instance_type
+          value: general
+          effect: NoSchedule
+          operator: Equal   
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                - key: role
+                  operator: In
+                  values:
+                  - general
+
+
+
+
