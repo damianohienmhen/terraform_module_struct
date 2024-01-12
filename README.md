@@ -67,3 +67,4 @@ Important files here:
 
 ### service-accounts
 This is another top level folder in this project. It defines servicea accounts which will be created and used by the Kubernetes clusters.
+<img width="1085" alt="image" src="https://github.com/damianohienmhen/terraform_module_struct/assets/73041606/bf86ab21-ecb6-439b-bffc-0d0817aca5a9">
